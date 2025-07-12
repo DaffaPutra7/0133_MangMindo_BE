@@ -26,27 +26,23 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi disederhanakan, tanpa 'image'
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Gambar opsional
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/menus');
-        }
-
+        // Buat menu tanpa data gambar
         $menu = Menu::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imagePath
+            // 'image' => null tidak perlu karena sudah nullable di database
         ]);
 
         return response()->json($menu, 201);
@@ -65,31 +61,22 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
+        // Validasi disederhanakan, tanpa 'image'
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        $imagePath = $menu->image;
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            if ($menu->image) {
-                Storage::delete($menu->image);
-            }
-            $imagePath = $request->file('image')->store('public/menus');
-        }
-
+        
+        // Update menu tanpa data gambar
         $menu->update([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imagePath
         ]);
 
         return response()->json($menu);
@@ -100,13 +87,7 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        // Hapus gambar dari storage
-        if ($menu->image) {
-            Storage::delete($menu->image);
-        }
-
         $menu->delete();
-
         return response()->json(['message' => 'Menu successfully deleted.'], 200);
     }
 }

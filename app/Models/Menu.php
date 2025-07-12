@@ -23,13 +23,13 @@ class Menu extends Model
         'image',
     ];
 
-    protected $appends = ['image_url'];
+    // protected $appends = ['image_url'];
 
-    public function getImageUrlAttribute()
-    {
-        if ($this->image) {
-            return Storage::url($this->image);
-        }
-        return null;
-    }
+    // public function getImageUrlAttribute()
+    // {
+    //     if ($this->image) {
+    //         return Storage::url($this->image);
+    //     }
+    //     return null;
+    // }
 }

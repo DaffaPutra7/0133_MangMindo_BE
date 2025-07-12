@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Customer\MenuController as CustomerMenuController;
 use App\Http\Controllers\Api\Customer\OrderController;
 use App\Http\Controllers\Api\Customer\ReviewController;
 
+// Route::get('images/{path}', [AdminMenuController::class, 'getImage'])->where('path', '.*');
 /*
 |--------------------------------------------------------------------------
 | Rute Otentikasi (Publik)
@@ -47,7 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'api'], function () {
         Route::get('menus', [AdminMenuController::class, 'index']);
         Route::post('menus', [AdminMenuController::class, 'store']);
         Route::get('menus/{menu}', [AdminMenuController::class, 'show']);
-        Route::post('menus/{menu}', [AdminMenuController::class, 'update']);
+        Route::post('menus/update/{menu}', [AdminMenuController::class, 'update']); 
         Route::delete('menus/{menu}', [AdminMenuController::class, 'destroy']);
 
         Route::get('orders', [AdminOrderController::class, 'index']);
