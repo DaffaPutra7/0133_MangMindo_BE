@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'required|string|in:diterima,dimasak,diantar,selesai',
+            'status' => 'required|string|in:diterima,dimasak,diantar,selesai,cancelled',
         ]);
 
         if ($validator->fails()) {
