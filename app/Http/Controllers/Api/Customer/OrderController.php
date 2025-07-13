@@ -82,7 +82,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())
-                        ->with('items.menu') // Mengambil detail item dan menu sekaligus
+                        ->with('items.menu', 'review') // Mengambil detail item dan menu sekaligus
                         ->latest()
                         ->get();
 

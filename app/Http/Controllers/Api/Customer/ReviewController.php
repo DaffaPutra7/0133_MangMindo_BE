@@ -21,7 +21,7 @@ class ReviewController extends Controller
         }
 
         // 2. Pastikan pesanan sudah selesai (completed)
-        if ($order->status !== 'completed') {
+        if ($order->status !== 'selesai') { // ✅ BENAR
             return response()->json(['message' => 'Pesanan belum selesai'], 422);
         }
 
